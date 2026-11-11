@@ -60,10 +60,10 @@ abstract final class AstrynGlass {
   static double controlSaturation({required bool isLight}) =>
       isLight ? 2.08 : 2.84;
 
-  static const Color lightDockTint = Color(0x73CDB6FF);
-  static const double dockTintAlphaLight = 0.45;
-  static const double dockTintAlphaDark = 0.38;
-  static const Color darkDockTint = Color(0x61CDB6FF);
+  static const Color lightDockTint = Color(0x8CDED3FF);
+  static const double dockTintAlphaLight = 0.55;
+  static const double dockTintAlphaDark = 0.45;
+  static const Color darkDockTint = Color(0x73DBCDFF);
 
   static Color dockTint({required bool isLight}) =>
       isLight ? lightDockTint : darkDockTint;

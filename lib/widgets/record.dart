@@ -153,7 +153,7 @@ class RecordArrow extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       '→',
-      style: RecordTextStyles.of(context).secondary.toJetBrainsMono,
+      style: RecordTextStyles.of(context).secondary,
     );
   }
 }

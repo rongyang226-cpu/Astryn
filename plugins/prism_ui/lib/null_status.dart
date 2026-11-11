@@ -37,8 +37,8 @@ class _SearchIllustration implements Illustration {
   bool get isError => false;
 }
 
-/// Holds the transition of the route it arrives in while its first load runs,
-/// as [ArrivalHold] does.
+/// A first load shows [loadingStatus] once it has run past a short delay,
+/// so a fast load never flashes one; the push itself is never held for it.
 class NullStatusSwitcher extends StatefulWidget {
   /// Only the first load is held back; later loads keep what is on screen.
   final bool isLoading;
@@ -50,8 +50,8 @@ class NullStatusSwitcher extends StatefulWidget {
   final NullStatus? nullStatus;
   final Widget child;
 
-  /// Without it, the first load leaves the push alone and shows
-  /// [loadingStatus] at once.
+  /// When false, [loadingStatus] shows at once instead of after the delay.
+  /// The push itself is never held either way.
   final bool holdsArrival;
 
   const NullStatusSwitcher({

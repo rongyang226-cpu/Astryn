@@ -16,7 +16,7 @@ import 'package:path/path.dart';
 /// The name of the leaf the Core signs for a trust store to verify.
 const mitmCheckHost = 'mitm-check.flclash.invalid';
 
-const mitmCertificateFileName = 'FlClash CA.crt';
+const mitmCertificateFileName = 'Astryn CA.crt';
 
 /// Named by the CA, so that a renewed one saved beside it is told apart.
 String mitmSavedFileName(MitmCertificate ca) => '${ca.subject}.crt';
@@ -366,7 +366,7 @@ class LinuxMitmTrustStore implements MitmTrustStore {
   final Future<String?> Function(String path) readFile;
   final Future<List<String>> Function(String path) listDirectory;
 
-  static const nickname = 'FlClash MITM CA';
+  static const nickname = 'Astryn MITM CA';
 
   /// Where Go's crypto/x509 looks, which covers what most programs read.
   static const bundles = [

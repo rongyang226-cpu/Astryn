@@ -75,7 +75,7 @@ class MitmBodySection extends StatelessWidget {
             onPressed: () => _open(context),
             title: Text(
               content.preview,
-              style: AppTextStyle.footnote.of(context).toJetBrainsMono,
+              style: AppTextStyle.footnote.of(context),
             ),
           ),
           if (content.isCut)
@@ -149,7 +149,7 @@ class _MitmHexView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final appLocalizations = context.appLocalizations;
-    final style = AppTextStyle.footnote.of(context).toJetBrainsMono;
+    final style = AppTextStyle.footnote.of(context);
     return Scaffold(
       title: title,
       menuItems: [

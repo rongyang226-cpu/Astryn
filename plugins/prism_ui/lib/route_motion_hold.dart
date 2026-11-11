@@ -77,7 +77,8 @@ mixin RouteMotionHoldMixin<T extends StatefulWidget> on State<T> {
     update();
   }
 
-  /// Applies at once while [ArrivalHold] keeps the push at value zero.
+  /// Applies at once before the push starts moving; once it is underway
+  /// the update waits until the route settles.
   void showFirstContent(VoidCallback update) {
     if (_settling || (_motion?.isUnderway ?? false)) {
       _heldUpdate = update;

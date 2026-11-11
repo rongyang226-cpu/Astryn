@@ -253,7 +253,7 @@ void main() {
         CardPageRoute<void>(builder: (_) => _FirstContent(source: source)),
       );
       await tester.pump();
-      await tester.pump(arrivalHoldLimit);
+      await tester.pump(const Duration(milliseconds: 200));
       await tester.pump(const Duration(milliseconds: 32));
       await tester.pump(const Duration(milliseconds: 32));
 

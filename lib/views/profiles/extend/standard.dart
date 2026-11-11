@@ -272,7 +272,6 @@ class _MatchTargetItem extends ConsumerWidget {
         matchTarget ?? appLocalizations.followProfile,
         style: AppTextStyle.subheadline
             .of(context)
-            .toJetBrainsMono
             .copyWith(
               color: invalid
                   ? context.colorScheme.error

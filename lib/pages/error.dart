@@ -245,7 +245,6 @@ class _InitErrorScreenState extends State<InitErrorScreen> {
                                     .of(context)
                                     .copyWith(
                                       color: colorScheme.onSurfaceVariant,
-                                      fontFamily: 'monospace',
                                       height: 1.5,
                                     ),
                               ),

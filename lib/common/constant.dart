@@ -10,6 +10,10 @@ import 'package:fl_clash/models/models.dart';
 import 'package:flutter/widgets.dart';
 
 const appName = '星栖';
+
+/// ASCII-only app name for HTTP headers: [appName] is Chinese, and a
+/// header value must be ASCII, so the User-Agent uses this instead.
+const uaAppName = 'Astryn';
 const appHelperService = 'FlClashHelperService';
 const coreManifestName = 'manifest.json';
 const browserUa =

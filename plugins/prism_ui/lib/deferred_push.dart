@@ -1,18 +1,14 @@
-import 'dart:async';
-
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/widgets.dart';
 import 'package:prism_ui/motion.dart';
-import 'package:prism_ui/navigator.dart';
-
-const arrivalHoldLimit = Duration(milliseconds: 200);
 
 /// Starts a push transition one frame after the page is first built, so a long
-/// first build does not swallow the start of the transition.
+/// first build does not swallow the start of the transition. A page whose
+/// first load is still running does not hold the transition: it slides in
+/// with its loading state and the content arrives when it is ready, so the
+/// page underneath starts receding at once instead of freezing on screen.
 mixin DeferredPushRouteMixin<T> on TransitionRoute<T> {
   _TickerCapture? _vsync;
-  var _takesHolds = false;
-  List<Completer<void>>? _arrivalHolds;
 
   @override
   AnimationController createAnimationController() {
@@ -32,92 +28,26 @@ mixin DeferredPushRouteMixin<T> on TransitionRoute<T> {
       return super.didPush();
     }
     ticker.muted = true;
-    _takesHolds = true;
-    final holds = _arrivalHolds = [];
     final pushed = super.didPush();
     final context = navigator!.context;
-    SchedulerBinding.instance.addPostFrameCallback((_) async {
-      _takesHolds = false;
-      if (holds.isNotEmpty) {
-        await Future.wait([
-          for (final hold in holds) hold.future,
-        ]).timeout(arrivalHoldLimit, onTimeout: () => const []);
-        if (!context.mounted) {
-          return;
-        }
-      }
-      _arrivalHolds = null;
+    SchedulerBinding.instance.addPostFrameCallback((_) {
       ticker.muted = !TickerMode.getValuesNotifier(context).value.enabled;
     });
     return pushed;
   }
 }
 
-/// Holds the transition of its page's route, and of the sheets carrying it,
-/// until [ready], for at most [arrivalHoldLimit].
-/// Counts only in the first frame of a page its route pushed.
-class ArrivalHold extends StatefulWidget {
+/// Marks a page's first content as not ready yet. The push no longer waits
+/// for it: the page moves in with its loading state and the content appears
+/// when it is ready.
+class ArrivalHold extends StatelessWidget {
   const ArrivalHold({super.key, required this.ready, required this.child});
 
   final bool ready;
   final Widget child;
 
   @override
-  State<ArrivalHold> createState() => _ArrivalHoldState();
-}
-
-class _ArrivalHoldState extends State<ArrivalHold> {
-  var _checked = false;
-  Completer<void>? _hold;
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    if (_checked) {
-      return;
-    }
-    _checked = true;
-    if (widget.ready) {
-      return;
-    }
-    final heldRoutes = [
-      for (final route in routesCarrying(context))
-        if (route case final DeferredPushRouteMixin<Object?> held
-            when held._takesHolds)
-          held,
-    ];
-    if (heldRoutes.isNotEmpty) {
-      final hold = _hold = Completer();
-      for (final route in heldRoutes) {
-        route._arrivalHolds!.add(hold);
-      }
-    }
-  }
-
-  @override
-  void didUpdateWidget(ArrivalHold oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    if (widget.ready) {
-      _release();
-    }
-  }
-
-  @override
-  void dispose() {
-    _release();
-    super.dispose();
-  }
-
-  void _release() {
-    final hold = _hold;
-    _hold = null;
-    if (hold != null && !hold.isCompleted) {
-      hold.complete();
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) => widget.child;
+  Widget build(BuildContext context) => child;
 }
 
 class _TickerCapture implements TickerProvider {

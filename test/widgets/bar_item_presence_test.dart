@@ -572,7 +572,7 @@ void main() {
     expect(tester.takeException(), isNull);
   });
 
-  testWidgets('a zoom held for its page keeps the back button of both', (
+  testWidgets('a zoom in flight keeps the back button of both', (
     tester,
   ) async {
     await tester.pumpWidget(pushApp());
@@ -604,7 +604,7 @@ void main() {
 
     await tester.tap(find.text('Tile'));
     await tester.pump();
-    await tester.pump(arrivalHoldLimit);
+    await tester.pump(const Duration(milliseconds: 200));
     await tester.pump();
     await tester.pump(const Duration(milliseconds: 16));
     await tester.pump();

@@ -58,38 +58,39 @@ ThemeData watchAppTheme(WidgetRef ref, Brightness brightness) {
 
 /// 星栖三色进主题：亮色用冷白光纱罩托住深色背景图上的深色文字，深色用深空蓝纱罩；
 /// 卡片等嵌套层掺星紫，越深越紫。alpha 是纱罩本身的不透明度。
+/// 纱罩故意偏淡：背景图是深色，纱罩太透卡片就发暗，白色卡片也跟着灰。
 ColorScheme _astrynColorScheme(ColorScheme scheme) {
   const starTint = Color(astrynStarPurpleTint);
   if (scheme.brightness == Brightness.dark) {
     const deep = Color(astrynDeepSpaceBlue);
     return scheme.copyWith(
-      surface: deep.withValues(alpha: 0.58),
+      surface: deep.withValues(alpha: 0.68),
       surfaceDim: deep.withValues(alpha: 0.50),
-      surfaceBright: Color.lerp(deep, starTint, 0.14)!
-          .withValues(alpha: 0.68),
-      surfaceContainerLowest: deep.withValues(alpha: 0.42),
-      surfaceContainerLow: deep.withValues(alpha: 0.50),
-      surfaceContainer: deep.withValues(alpha: 0.60),
-      surfaceContainerHigh: Color.lerp(deep, starTint, 0.10)!
-          .withValues(alpha: 0.68),
-      surfaceContainerHighest: Color.lerp(deep, starTint, 0.18)!
-          .withValues(alpha: 0.74),
+      surfaceBright: Color.lerp(deep, starTint, 0.30)!
+          .withValues(alpha: 0.80),
+      surfaceContainerLowest: deep.withValues(alpha: 0.54),
+      surfaceContainerLow: deep.withValues(alpha: 0.62),
+      surfaceContainer: deep.withValues(alpha: 0.72),
+      surfaceContainerHigh: Color.lerp(deep, starTint, 0.22)!
+          .withValues(alpha: 0.78),
+      surfaceContainerHighest: Color.lerp(deep, starTint, 0.30)!
+          .withValues(alpha: 0.82),
       surfaceTint: starTint,
       tertiary: const Color(astrynColdWhite),
     );
   }
   const cold = Color(astrynColdWhite);
   return scheme.copyWith(
-    surface: cold.withValues(alpha: 0.60),
+    surface: cold.withValues(alpha: 0.72),
     surfaceDim: cold.withValues(alpha: 0.50),
-    surfaceBright: cold.withValues(alpha: 0.74),
-    surfaceContainerLowest: cold.withValues(alpha: 0.40),
-    surfaceContainerLow: cold.withValues(alpha: 0.48),
-    surfaceContainer: cold.withValues(alpha: 0.56),
-    surfaceContainerHigh: Color.lerp(cold, starTint, 0.35)!
-        .withValues(alpha: 0.66),
-    surfaceContainerHighest: Color.lerp(cold, starTint, 0.45)!
-        .withValues(alpha: 0.74),
+    surfaceBright: cold.withValues(alpha: 0.86),
+    surfaceContainerLowest: cold.withValues(alpha: 0.52),
+    surfaceContainerLow: cold.withValues(alpha: 0.60),
+    surfaceContainer: cold.withValues(alpha: 0.68),
+    surfaceContainerHigh: Color.lerp(cold, starTint, 0.20)!
+        .withValues(alpha: 0.76),
+    surfaceContainerHighest: Color.lerp(cold, starTint, 0.28)!
+        .withValues(alpha: 0.82),
     surfaceTint: starTint,
     tertiary: const Color(astrynDeepSpaceBlue),
   );

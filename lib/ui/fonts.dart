@@ -1,16 +1,8 @@
-import 'package:flutter/widgets.dart';
-
-/// The fonts FlClash bundles, declared in its `pubspec.yaml`.
+/// The fonts Astryn bundles, declared in its `pubspec.yaml`.
 enum FontFamily {
-  twEmoji('Twemoji'),
-  jetBrainsMono('JetBrainsMono');
+  twEmoji('Twemoji');
 
   final String value;
 
   const FontFamily(this.value);
-}
-
-extension FontFamilyTextStyle on TextStyle {
-  TextStyle get toJetBrainsMono =>
-      copyWith(fontFamily: FontFamily.jetBrainsMono.value);
 }
