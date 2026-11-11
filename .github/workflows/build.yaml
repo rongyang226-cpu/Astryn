@@ -64,9 +64,9 @@ jobs:
         run: |
           yq -i '.hooks.user_defines.setup.build_assets = false' pubspec.yaml
 
-      - name: Verify changelog
-        if: github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/')
-        run: dart run tool/changelog.dart verify
+      # Astryn fork: changelog verify skipped — the repo has no upstream
+      # v0.8.96 boundary tag, so `tool/changelog.dart verify` cannot resolve
+      # the v0.8.96..vX.Y.Z range. CHANGELOG.md is maintained by hand.
 
       - name: Run tests
         run: dart run tool/test.dart -- --reporter expanded --coverage
