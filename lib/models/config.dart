@@ -91,6 +91,7 @@ const defaultAccessControlProps = AccessControlProps();
 const defaultThemeProps = ThemeProps(
   primaryColor: defaultPrimaryColor,
   colorStyle: ColorStyle.tinted,
+  fontFamily: 'casual',
 );
 
 HotKeyAction _defaultHotKeyAction(HotAction action, PhysicalKeyboardKey key) {
