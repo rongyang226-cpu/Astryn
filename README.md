@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="assets/icon.png" width="128" alt="星栖 Astryn">
+</p>
+
 # 星栖 Astryn
 
 > 星光停留的地方
