@@ -182,7 +182,7 @@ class ApplicationState extends ConsumerState<Application> {
             );
           },
           title: appName,
-          locale: getLocaleForString(locale),
+          locale: getLocaleForString(locale) ?? const Locale('en'),
           supportedLocales: AppLocalizations.delegate.supportedLocales,
           themeMode: themeProps.themeMode,
           theme: watchAppTheme(ref, Brightness.light),
