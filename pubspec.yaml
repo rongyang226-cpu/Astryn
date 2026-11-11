@@ -1,7 +1,7 @@
 name: fl_clash
 description: A multi-platform proxy client based on ClashMeta, simple and easy to use, open-source and ad-free.
 publish_to: 'none'
-version: 1.0.4+2018
+version: 1.0.5+2019
 environment:
   sdk: '>=3.10.0 <4.0.0'
 
@@ -113,6 +113,9 @@ flutter:
     - family: Twemoji
       fonts:
         - asset: assets/fonts/Twemoji.Mozilla.ttf
+    - family: ZhiMangXing
+      fonts:
+        - asset: assets/fonts/ZhiMangXing-Regular.ttf
 flutter_intl:
   enabled: true
   class_name: AppLocalizations

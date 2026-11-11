@@ -654,7 +654,10 @@ class ListHeader extends ConsumerWidget {
     );
     return DecoratedBox(
       decoration: ShapeDecoration(
-        color: level.colorOf(colorScheme),
+        // Same level as the inner Card (level - 1): the outer box and the
+        // Card must be one solid fill, or the superellipse gap between them
+        // shows as a jagged edge (毛边) around the header.
+        color: SurfaceLevel.values[level.index - 1].colorOf(colorScheme),
         shape: AppShape.vertical(
           top: radius,
           bottom: unfolded ? radius * floating : radius,

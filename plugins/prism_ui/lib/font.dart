@@ -7,24 +7,26 @@ enum _HanVariant { simplified, traditional, japanese, korean }
 // Chinese proxy names with Japanese forms under an English UI on Windows.
 const _hanFamilies = <TargetPlatform, Map<_HanVariant, List<String>>>{
   TargetPlatform.windows: {
-    _HanVariant.simplified: ['Microsoft YaHei UI'],
-    _HanVariant.traditional: ['Microsoft JhengHei UI'],
+    _HanVariant.simplified: ['ZhiMangXing', 'Microsoft YaHei UI'],
+    _HanVariant.traditional: ['ZhiMangXing', 'Microsoft JhengHei UI'],
     _HanVariant.japanese: ['Yu Gothic UI', 'Meiryo UI'],
     _HanVariant.korean: ['Malgun Gothic'],
   },
   TargetPlatform.macOS: {
-    _HanVariant.simplified: ['PingFang SC'],
-    _HanVariant.traditional: ['PingFang TC'],
+    _HanVariant.simplified: ['ZhiMangXing', 'PingFang SC'],
+    _HanVariant.traditional: ['ZhiMangXing', 'PingFang TC'],
     _HanVariant.japanese: ['Hiragino Sans'],
     _HanVariant.korean: ['Apple SD Gothic Neo'],
   },
   TargetPlatform.android: {
     _HanVariant.simplified: [
+      'ZhiMangXing',
       'Noto Sans CJK SC',
       'Noto Sans SC',
       'Source Han Sans SC',
     ],
     _HanVariant.traditional: [
+      'ZhiMangXing',
       'Noto Sans CJK TC',
       'Noto Sans TC',
       'Source Han Sans TC',
@@ -42,12 +44,14 @@ const _hanFamilies = <TargetPlatform, Map<_HanVariant, List<String>>>{
   },
   TargetPlatform.linux: {
     _HanVariant.simplified: [
+      'ZhiMangXing',
       'Noto Sans CJK SC',
       'Noto Sans SC',
       'Source Han Sans SC',
       'WenQuanYi Micro Hei',
     ],
     _HanVariant.traditional: [
+      'ZhiMangXing',
       'Noto Sans CJK TC',
       'Noto Sans TC',
       'Source Han Sans TC',
