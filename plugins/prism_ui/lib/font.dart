@@ -18,6 +18,28 @@ const _hanFamilies = <TargetPlatform, Map<_HanVariant, List<String>>>{
     _HanVariant.japanese: ['Hiragino Sans'],
     _HanVariant.korean: ['Apple SD Gothic Neo'],
   },
+  TargetPlatform.android: {
+    _HanVariant.simplified: [
+      'Noto Sans CJK SC',
+      'Noto Sans SC',
+      'Source Han Sans SC',
+    ],
+    _HanVariant.traditional: [
+      'Noto Sans CJK TC',
+      'Noto Sans TC',
+      'Source Han Sans TC',
+    ],
+    _HanVariant.japanese: [
+      'Noto Sans CJK JP',
+      'Noto Sans JP',
+      'Source Han Sans',
+    ],
+    _HanVariant.korean: [
+      'Noto Sans CJK KR',
+      'Noto Sans KR',
+      'Source Han Sans K',
+    ],
+  },
   TargetPlatform.linux: {
     _HanVariant.simplified: [
       'Noto Sans CJK SC',
