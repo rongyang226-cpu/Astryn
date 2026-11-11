@@ -521,22 +521,10 @@ class _GroupSliverState extends ConsumerState<_GroupSliver>
             child: SizedBox(height: listHeaderHeight),
           );
         }
-        final (floating, lift, cover, pageColor) = state;
+        final (floating, lift, _, _) = state;
         return header = PinnedHeaderSliver(
           child: RepaintBoundary(
-            child: Stack(
-              clipBehavior: Clip.none,
-              children: [
-                Positioned(
-                  top: -cover,
-                  left: 0,
-                  right: 0,
-                  height: cover + listHeaderHeight / 2,
-                  child: ColoredBox(color: pageColor),
-                ),
-                buildHeader(floating: floating, lift: lift),
-              ],
-            ),
+            child: buildHeader(floating: floating, lift: lift),
           ),
         );
       },
