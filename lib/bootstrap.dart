@@ -127,8 +127,7 @@ class Bootstrap {
     final profiles = await database.profilesDao.query().get();
     container.read(profilesProvider.notifier).reorder(profiles);
     await AppLocalizations.load(
-      getLocaleForString(config.appSettingProps.locale) ??
-          const Locale('en'),
+      getLocaleForString(config.appSettingProps.locale) ?? const Locale('en'),
     );
     await window?.init(version, config.windowProps);
     if (system.isAndroid) {
