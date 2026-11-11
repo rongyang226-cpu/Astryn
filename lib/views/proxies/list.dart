@@ -394,45 +394,33 @@ class _GroupSliverState extends ConsumerState<_GroupSliver>
     );
   }
 
-  /// The card reaches up behind the header's rounded bottom corners, so the
-  /// two read as one while the rows unfold or fold.
-  Widget _buildUnfoldingRows(double extent, ShapeDecoration decoration) {
+  /// No wrapper behind the rows: the rows are standalone cards, there is no
+  /// outer rectangular container (the sharp-topped box) around the group.
+  Widget _buildUnfoldingRows(double extent) {
     final rows = widget.group.all.chunks(widget.columns).toList();
     final visible = min(
       rows.length.toDouble(),
       MediaQuery.sizeOf(context).height / extent,
     );
     final count = min(rows.length, visible.floor() + 1);
-    return Stack(
-      clipBehavior: Clip.none,
-      children: [
-        Positioned(
-          top: -AppCorner.xl.ap(context),
-          left: 0,
-          right: 0,
-          bottom: 0,
-          child: DecoratedBox(decoration: decoration),
-        ),
-        SizeTransition(
-          sizeFactor: _unfold,
-          alignment: Alignment.topCenter,
-          child: Column(
-            children: [
-              for (var index = 0; index < count; index++)
-                UnfoldEntryTransition(
-                  animation: _unfold,
-                  index: index,
-                  visibleCount: visible,
-                  child: SizedBox(
-                    height: extent,
-                    child: _buildRow(context, rows[index]),
-                  ),
-                ),
-              if (count == rows.length) const SizedBox(height: _lastRowGrowth),
-            ],
-          ),
-        ),
-      ],
+    return SizeTransition(
+      sizeFactor: _unfold,
+      alignment: Alignment.topCenter,
+      child: Column(
+        children: [
+          for (var index = 0; index < count; index++)
+            UnfoldEntryTransition(
+              animation: _unfold,
+              index: index,
+              visibleCount: visible,
+              child: SizedBox(
+                height: extent,
+                child: _buildRow(context, rows[index]),
+              ),
+            ),
+          if (count == rows.length) const SizedBox(height: _lastRowGrowth),
+        ],
+      ),
     );
   }
 
@@ -446,31 +434,19 @@ class _GroupSliverState extends ConsumerState<_GroupSliver>
     Widget? rows;
     if (!_controller.isDismissed && widget.group.all.isNotEmpty) {
       final extent = getRowExtent(widget.cardType);
-      final decoration = ShapeDecoration(
-        color: context.raisedSurfaceLevel.colorOf(context.colorScheme),
-        shape: AppShape.vertical(
-          top: AppCorner.none,
-          bottom: AppCorner.xl.ap(context),
-        ),
-      );
       if (!unfolded) {
         _rows = null;
-        rows = SliverToBoxAdapter(
-          child: _buildUnfoldingRows(extent, decoration),
-        );
+        rows = SliverToBoxAdapter(child: _buildUnfoldingRows(extent));
       } else {
         if (_rows == null || _rowExtent != extent) {
           _rows = _buildRows(extent);
           _rowExtent = extent;
         }
-        rows = DecoratedSliver(
-          decoration: decoration,
-          sliver: SliverMainAxisGroup(
-            slivers: [
-              _rows!,
-              const SliverToBoxAdapter(child: SizedBox(height: _lastRowGrowth)),
-            ],
-          ),
+        rows = SliverMainAxisGroup(
+          slivers: [
+            _rows!,
+            const SliverToBoxAdapter(child: SizedBox(height: _lastRowGrowth)),
+          ],
         );
       }
     } else {
@@ -609,11 +585,9 @@ class ListHeader extends ConsumerWidget {
     final level = floating > 0
         ? SurfaceLevel.floatingOf(colorScheme)
         : context.raisedSurfaceLevel;
-    final radius = 48.0.ap(context);
-    // Single layer: the Card itself carries the vertical shape. The old
-    // outer DecoratedBox + inner Card rendered as two layers — one rounded,
-    // one rectangular (直角) — and the rectangular one stuck out at the two
-    // small corners (毛边). One Card, one shape, no second edge.
+    final radius = AppCorner.full.ap(context);
+    // Single layer: the Card itself carries the shape, a full pill, so the
+    // header has no rectangular edge at all.
     return SurfaceScope(
       // Card fills one level above its scope.
       level: SurfaceLevel.values[level.index - 1],
@@ -621,10 +595,7 @@ class ListHeader extends ConsumerWidget {
         enterActionsOnRight: true,
         enterAnimated: enterAnimated,
         key: key,
-        shape: AppShape.vertical(
-          top: radius,
-          bottom: unfolded ? radius * floating : radius,
-        ),
+        shape: AppShape.all(radius),
         child: Padding(
           padding: const EdgeInsets.all(_headerInset),
           child: Row(
