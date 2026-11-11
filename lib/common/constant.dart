@@ -9,7 +9,7 @@ import 'package:fl_clash/enum/enum.dart';
 import 'package:fl_clash/models/models.dart';
 import 'package:flutter/widgets.dart';
 
-const appName = '星栖';
+const appName = 'Astryn';
 
 /// ASCII-only app name for HTTP headers: [appName] is Chinese, and a
 /// header value must be ASCII, so the User-Agent uses this instead.
