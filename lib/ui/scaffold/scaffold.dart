@@ -742,7 +742,7 @@ class ScaffoldState extends State<Scaffold>
     final uncovered = ReverseAnimation(sheetCoverOf(context));
     return ScaffoldBar(
       isCompact: isCompact,
-      backgroundColor: widget.backgroundColor,
+      backgroundColor: widget.backgroundColor ?? const Color(0x00000000),
       loading: _loadingNotifier,
       listenable: Listenable.merge([_appBarState, _searchCovered]),
       builder: (_) {
@@ -856,7 +856,8 @@ class ScaffoldState extends State<Scaffold>
       footActions: form.pop?.atFoot == true
           ? _buildFootActions(widget.confirmationAction!)
           : null,
-      backgroundColor: widget.backgroundColor,
+      // 子页面默认透出全局壁纸，不盖白底；显式传了底色时仍用显式值。
+      backgroundColor: widget.backgroundColor ?? const Color(0x00000000),
       resizeToAvoidBottomInset: widget.resizeToAvoidBottomInset,
     );
   }
