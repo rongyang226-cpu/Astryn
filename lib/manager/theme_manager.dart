@@ -86,22 +86,22 @@ ColorScheme _astrynColorScheme(ColorScheme scheme) {
   }
   const cold = Color(astrynColdWhite);
   return scheme.copyWith(
-    surface: cold.withValues(alpha: 0.72),
-    surfaceDim: cold.withValues(alpha: 0.50),
-    surfaceBright: cold.withValues(alpha: 0.86),
-    surfaceContainerLowest: cold.withValues(alpha: 0.52),
-    surfaceContainerLow: cold.withValues(alpha: 0.60),
-    surfaceContainer: cold.withValues(alpha: 0.68),
+    surface: cold.withValues(alpha: 0.88),
+    surfaceDim: cold.withValues(alpha: 0.70),
+    surfaceBright: cold.withValues(alpha: 0.94),
+    surfaceContainerLowest: cold.withValues(alpha: 0.72),
+    surfaceContainerLow: cold.withValues(alpha: 0.78),
+    surfaceContainer: cold.withValues(alpha: 0.84),
     surfaceContainerHigh: Color.lerp(
       cold,
       starTint,
       0.20,
-    )!.withValues(alpha: 0.76),
+    )!.withValues(alpha: 0.88),
     surfaceContainerHighest: Color.lerp(
       cold,
       starTint,
       0.28,
-    )!.withValues(alpha: 0.82),
+    )!.withValues(alpha: 0.92),
     surfaceTint: starTint,
     tertiary: const Color(astrynDeepSpaceBlue),
   );
