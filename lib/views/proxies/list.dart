@@ -610,7 +610,7 @@ class ListHeader extends ConsumerWidget {
     final level = floating > 0
         ? SurfaceLevel.floatingOf(colorScheme)
         : context.raisedSurfaceLevel;
-    final radius = AppCorner.xl.ap(context);
+    final radius = AppCorner.xxl.ap(context);
     final card = Card(
       enterActionsOnRight: true,
       enterAnimated: enterAnimated,
