@@ -151,10 +151,7 @@ class RecordArrow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(
-      '→',
-      style: RecordTextStyles.of(context).secondary,
-    );
+    return Text('→', style: RecordTextStyles.of(context).secondary);
   }
 }
 

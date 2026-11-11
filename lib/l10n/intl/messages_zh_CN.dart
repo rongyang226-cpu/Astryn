@@ -138,8 +138,7 @@ class MessageLookup extends MessageLookupByLibrary {
   static String m54(command) =>
       "Chrome 和 Firefox 使用自己的证书库，需要 certutil：${command}";
 
-  static String m55(host) =>
-      "要把 ${host} 加入主机名列表吗？之后星栖能读取发往它的内容，包括 Cookie 和密码。";
+  static String m55(host) => "要把 ${host} 加入主机名列表吗？之后星栖能读取发往它的内容，包括 Cookie 和密码。";
 
   static String m56(host) => "要把 -${host} 加到主机名列表顶部吗？之后不再解密该主机。";
 
@@ -1468,9 +1467,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "sendFromPhonePageSent": MessageLookupByLibrary.simpleMessage(
       "已发送，请在另一台设备上确认导入。",
     ),
-    "sendFromPhonePageTitle": MessageLookupByLibrary.simpleMessage(
-      "把链接发送到星栖",
-    ),
+    "sendFromPhonePageTitle": MessageLookupByLibrary.simpleMessage("把链接发送到星栖"),
     "sendFromPhonePermissionDenied": MessageLookupByLibrary.simpleMessage(
       "从手机接收链接需要「附近的设备」权限，星栖才能访问局域网。请在应用设置中开启。",
     ),

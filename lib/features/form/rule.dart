@@ -113,9 +113,7 @@ class RuleItem extends StatelessWidget {
       title: Center(
         child: LayoutBuilder(
           builder: (context, constraints) {
-            final labelStyle = DefaultTextStyle.of(
-              context,
-            ).style;
+            final labelStyle = DefaultTextStyle.of(context).style;
             final actionWidth = globalState.measure
                 .computeTextSize(Text(rule.ruleAction.name, style: labelStyle))
                 .width;

@@ -66,15 +66,20 @@ ColorScheme _astrynColorScheme(ColorScheme scheme) {
     return scheme.copyWith(
       surface: deep.withValues(alpha: 0.68),
       surfaceDim: deep.withValues(alpha: 0.50),
-      surfaceBright: Color.lerp(deep, starTint, 0.30)!
-          .withValues(alpha: 0.80),
+      surfaceBright: Color.lerp(deep, starTint, 0.30)!.withValues(alpha: 0.80),
       surfaceContainerLowest: deep.withValues(alpha: 0.54),
       surfaceContainerLow: deep.withValues(alpha: 0.62),
       surfaceContainer: deep.withValues(alpha: 0.72),
-      surfaceContainerHigh: Color.lerp(deep, starTint, 0.22)!
-          .withValues(alpha: 0.78),
-      surfaceContainerHighest: Color.lerp(deep, starTint, 0.30)!
-          .withValues(alpha: 0.82),
+      surfaceContainerHigh: Color.lerp(
+        deep,
+        starTint,
+        0.22,
+      )!.withValues(alpha: 0.78),
+      surfaceContainerHighest: Color.lerp(
+        deep,
+        starTint,
+        0.30,
+      )!.withValues(alpha: 0.82),
       surfaceTint: starTint,
       tertiary: const Color(astrynColdWhite),
     );
@@ -87,10 +92,16 @@ ColorScheme _astrynColorScheme(ColorScheme scheme) {
     surfaceContainerLowest: cold.withValues(alpha: 0.52),
     surfaceContainerLow: cold.withValues(alpha: 0.60),
     surfaceContainer: cold.withValues(alpha: 0.68),
-    surfaceContainerHigh: Color.lerp(cold, starTint, 0.20)!
-        .withValues(alpha: 0.76),
-    surfaceContainerHighest: Color.lerp(cold, starTint, 0.28)!
-        .withValues(alpha: 0.82),
+    surfaceContainerHigh: Color.lerp(
+      cold,
+      starTint,
+      0.20,
+    )!.withValues(alpha: 0.76),
+    surfaceContainerHighest: Color.lerp(
+      cold,
+      starTint,
+      0.28,
+    )!.withValues(alpha: 0.82),
     surfaceTint: starTint,
     tertiary: const Color(astrynDeepSpaceBlue),
   );

@@ -89,8 +89,11 @@ abstract final class AstrynGlass {
     required Color accent,
   }) {
     if (isLight) return const Color(0x86CDB6FF);
-    return Color.lerp(scaffoldBackground, accent, 0.25)!
-        .withValues(alpha: 0.42);
+    return Color.lerp(
+      scaffoldBackground,
+      accent,
+      0.25,
+    )!.withValues(alpha: 0.42);
   }
 
   static Color dialogFill({
@@ -123,27 +126,18 @@ abstract final class AstrynGlass {
   static ShapeBorder dialogShape({required bool isLight}) =>
       RoundedSuperellipseBorder(
         borderRadius: AppRadius.all(34),
-        side: BorderSide(
-          color: surfaceRimColor(isLight: isLight),
-          width: 1.2,
-        ),
+        side: BorderSide(color: surfaceRimColor(isLight: isLight), width: 1.2),
       );
 
   static ShapeBorder menuShape({required bool isLight}) =>
       RoundedSuperellipseBorder(
         borderRadius: AppRadius.lg,
-        side: BorderSide(
-          color: surfaceRimColor(isLight: isLight),
-          width: 1.2,
-        ),
+        side: BorderSide(color: surfaceRimColor(isLight: isLight), width: 1.2),
       );
 
   static ShapeBorder topSheetShape({required bool isLight}) =>
       RoundedSuperellipseBorder(
         borderRadius: AppRadius.top(AppCorner.lg),
-        side: BorderSide(
-          color: surfaceRimColor(isLight: isLight),
-          width: 1.2,
-        ),
+        side: BorderSide(color: surfaceRimColor(isLight: isLight), width: 1.2),
       );
 }

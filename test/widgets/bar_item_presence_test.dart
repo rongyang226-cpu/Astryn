@@ -572,9 +572,7 @@ void main() {
     expect(tester.takeException(), isNull);
   });
 
-  testWidgets('a zoom in flight keeps the back button of both', (
-    tester,
-  ) async {
+  testWidgets('a zoom in flight keeps the back button of both', (tester) async {
     await tester.pumpWidget(pushApp());
     await tester.tap(find.text('Push1'));
     await tester.pumpAndSettle();

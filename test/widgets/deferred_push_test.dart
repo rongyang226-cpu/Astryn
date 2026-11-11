@@ -119,9 +119,7 @@ void main() {
     expect(route.animation!.value, closeTo(0.5 + firstFrame, 0.01));
   });
 
-  testWidgets('a first load slides in with its loading status', (
-    tester,
-  ) async {
+  testWidgets('a first load slides in with its loading status', (tester) async {
     await pumpHome(tester);
     final loading = ValueNotifier(true);
     addTearDown(loading.dispose);
