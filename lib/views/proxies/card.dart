@@ -198,7 +198,7 @@ class ProxyCard extends ConsumerWidget {
             addable: _isAddableToLocal(proxy, isCustomProfile: isCustomProfile),
           ),
           child: Card(
-            radius: AppCorner.xxl,
+            radius: AppCorner.full,
             enterActionsOnRight: true,
             key: key,
             onPressed: () => _handleSelect(ref),
