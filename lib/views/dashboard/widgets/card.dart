@@ -112,7 +112,7 @@ class DashboardCard extends StatelessWidget {
     return Container(
       clipBehavior: clipBehavior,
       decoration: ShapeDecoration(
-        color: AstrynGlass.dockTint(isLight: isLight),
+        color: AstrynGlass.heroTint(isLight: isLight),
         shape: shape,
         shadows: DashboardShadows.e1(context),
       ),

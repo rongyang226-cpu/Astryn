@@ -60,13 +60,14 @@ abstract final class AstrynGlass {
   static double controlSaturation({required bool isLight}) =>
       isLight ? 2.08 : 2.84;
 
-  static const Color lightDockTint = Color(0x8CDED3FF);
-  static const double dockTintAlphaLight = 0.55;
-  static const double dockTintAlphaDark = 0.45;
-  static const Color darkDockTint = Color(0x73DBCDFF);
+  // 首卡玻璃底色：浅色取星紫，深色取深空蓝向星紫靠拢的深紫蓝，各自适配明暗。
+  static const Color lightHeroTint = Color(0x8CCDB6FF);
+  static const double heroTintAlphaLight = 0.55;
+  static const double heroTintAlphaDark = 0.45;
+  static const Color darkHeroTint = Color(0x734F4A7C);
 
-  static Color dockTint({required bool isLight}) =>
-      isLight ? lightDockTint : darkDockTint;
+  static Color heroTint({required bool isLight}) =>
+      isLight ? lightHeroTint : darkHeroTint;
 
   static Color rimColor({required bool isLight}) =>
       Colors.white.withValues(alpha: isLight ? 0.60 : 0.35);
