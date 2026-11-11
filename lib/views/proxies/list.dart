@@ -13,7 +13,6 @@ import 'card.dart';
 import 'common.dart';
 
 const _headerInset = 10.0;
-const _headerButtonInset = 4.0;
 const _groupInset = 16.0;
 const _liftDistance = 16.0;
 const _groupMinWidth = 360.0;
@@ -611,85 +610,59 @@ class ListHeader extends ConsumerWidget {
         ? SurfaceLevel.floatingOf(colorScheme)
         : context.raisedSurfaceLevel;
     final radius = 48.0.ap(context);
-    final card = Card(
-      enterActionsOnRight: true,
-      enterAnimated: enterAnimated,
-      key: key,
-      radius: radius - _headerButtonInset,
-      child: Padding(
-        padding: const EdgeInsets.all(_headerInset - _headerButtonInset),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Flexible(
-              child: Row(
-                children: [
-                  _GroupIcon(src: group.icon, name: groupName),
-                  Flexible(child: _GroupSummary(groupName: groupName)),
-                ],
-              ),
-            ),
-            _GroupActions(
-              isExpand: isExpand,
-              isDelayTesting: isDelayTesting,
-              groupType: group.type.name,
-              onScrollToSelected: () {
-                onScrollToSelected(groupName);
-              },
-              onDelayTest: () {
-                ref
-                    .read(proxiesActionProvider.notifier)
-                    .delayTestPageGroup(groupName);
-              },
-              onToggle: () {
-                onChange(groupName);
-              },
-            ),
-          ],
-        ),
-      ),
-      onPressed: () {
-        onChange(groupName);
-      },
-    );
-    return DecoratedBox(
-      decoration: ShapeDecoration(
-        // Same level as the inner Card (level - 1): the outer box and the
-        // Card must be one solid fill, or the superellipse gap between them
-        // shows as a jagged edge (毛边) around the header.
-        color: SurfaceLevel.values[level.index - 1].colorOf(colorScheme),
+    // Single layer: the Card itself carries the vertical shape. The old
+    // outer DecoratedBox + inner Card rendered as two layers — one rounded,
+    // one rectangular (直角) — and the rectangular one stuck out at the two
+    // small corners (毛边). One Card, one shape, no second edge.
+    return SurfaceScope(
+      // Card fills one level above its scope.
+      level: SurfaceLevel.values[level.index - 1],
+      child: Card(
+        enterActionsOnRight: true,
+        enterAnimated: enterAnimated,
+        key: key,
         shape: AppShape.vertical(
           top: radius,
           bottom: unfolded ? radius * floating : radius,
         ),
-        shadows: lift == 0 ? null : _floatingShadows(colorScheme, lift),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(_headerButtonInset),
-        child: SurfaceScope(
-          // Card fills one level above its scope.
-          level: SurfaceLevel.values[level.index - 1],
-          child: card,
+        child: Padding(
+          padding: const EdgeInsets.all(_headerInset),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Flexible(
+                child: Row(
+                  children: [
+                    _GroupIcon(src: group.icon, name: groupName),
+                    Flexible(child: _GroupSummary(groupName: groupName)),
+                  ],
+                ),
+              ),
+              _GroupActions(
+                isExpand: isExpand,
+                isDelayTesting: isDelayTesting,
+                groupType: group.type.name,
+                onScrollToSelected: () {
+                  onScrollToSelected(groupName);
+                },
+                onDelayTest: () {
+                  ref
+                      .read(proxiesActionProvider.notifier)
+                      .delayTestPageGroup(groupName);
+                },
+                onToggle: () {
+                  onChange(groupName);
+                },
+              ),
+            ],
+          ),
         ),
+        onPressed: () {
+          onChange(groupName);
+        },
       ),
     );
   }
-}
-
-List<BoxShadow> _floatingShadows(ColorScheme colorScheme, double lift) {
-  final strength = colorScheme.brightness == Brightness.dark ? 3.0 : 1.0;
-  return [
-    BoxShadow(
-      color: colorScheme.shadow.withValues(alpha: 0.08 * strength * lift),
-      blurRadius: 16,
-      offset: const Offset(0, 4),
-    ),
-    BoxShadow(
-      color: colorScheme.shadow.withValues(alpha: 0.04 * strength * lift),
-      blurRadius: 3,
-      offset: const Offset(0, 1),
-    ),
-  ];
 }
 
 class _GroupIcon extends ConsumerWidget {
