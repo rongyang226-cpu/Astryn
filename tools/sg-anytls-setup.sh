@@ -36,9 +36,12 @@ if ! apk add --no-cache sing-box 2>/dev/null; then
   [ -n "$SB_BIN" ] || { echo "SINGBOX_BIN_NOT_FOUND"; exit 1; }
   cp "$SB_BIN" /usr/local/bin/sing-box
   chmod +x /usr/local/bin/sing-box
+  # GitHub binary is glibc-linked; Alpine uses musl, so add the glibc compat layer.
+  apk add --no-cache gcompat 2>/dev/null || true
 fi
-command -v sing-box >/dev/null || { echo "SINGBOX_MISSING"; exit 1; }
-sing-box version
+SB_BIN=$(command -v sing-box || echo /usr/local/bin/sing-box)
+[ -x "$SB_BIN" ] || { echo "SINGBOX_MISSING"; exit 1; }
+"$SB_BIN" version
 
 # 3. Generate a random AnyTLS password and a self-signed cert.
 echo "--- generating password and cert ---"
@@ -75,7 +78,7 @@ cat > /etc/sing-box/config.json <<EOF
 }
 EOF
 SB_BIN=$(command -v sing-box)
-/usr/local/bin/sing-box check -c /etc/sing-box/config.json 2>/dev/null || "$SB_BIN" check -c /etc/sing-box/config.json
+"$SB_BIN" check -c /etc/sing-box/config.json
 
 # 5. OpenRC service (Alpine) + start.
 cat > /etc/init.d/sing-box <<SVC
