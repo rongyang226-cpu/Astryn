@@ -18,21 +18,27 @@ sleep 1
 rm -rf /etc/sing-box /etc/xray /etc/v2ray /usr/local/etc/xray /usr/local/etc/v2ray
 rm -f /etc/init.d/sing-box /etc/init.d/xray /etc/init.d/v2ray
 
-# 2. Install sing-box 1.14.4 (official binary; detect arch).
+# 2. Install sing-box (Alpine community package; GitHub download failed on this box).
 echo "--- installing sing-box ---"
 apk add --no-cache curl openssl ca-certificates 2>/dev/null || true
-ARCH=$(uname -m)
-case "$ARCH" in
-  x86_64) SB_ARCH="amd64" ;;
-  aarch64) SB_ARCH="arm64" ;;
-  *) echo "UNSUPPORTED_ARCH $ARCH"; exit 1 ;;
-esac
-cd /tmp
-curl -sL -o sing-box.tar.gz "https://github.com/SagerNet/sing-box/releases/download/v1.14.4/sing-box-1.14.4-linux-${SB_ARCH}.tar.gz"
-tar xzf sing-box.tar.gz
-cp "sing-box-1.14.4-linux-${SB_ARCH}/sing-box" /usr/local/bin/sing-box
-chmod +x /usr/local/bin/sing-box
-/usr/local/bin/sing-box version
+if ! apk add --no-cache sing-box 2>/dev/null; then
+  echo "APK_SINGBOX_FAIL, trying GitHub binary"
+  ARCH=$(uname -m)
+  case "$ARCH" in
+    x86_64) SB_ARCH="amd64" ;;
+    aarch64) SB_ARCH="arm64" ;;
+    *) echo "UNSUPPORTED_ARCH $ARCH"; exit 1 ;;
+  esac
+  cd /tmp
+  curl -fL -o sing-box.tar.gz "https://github.com/SagerNet/sing-box/releases/download/v1.14.4/sing-box-1.14.4-linux-${SB_ARCH}.tar.gz"
+  tar xzf sing-box.tar.gz
+  SB_BIN=$(find . -name sing-box -type f | head -1)
+  [ -n "$SB_BIN" ] || { echo "SINGBOX_BIN_NOT_FOUND"; exit 1; }
+  cp "$SB_BIN" /usr/local/bin/sing-box
+  chmod +x /usr/local/bin/sing-box
+fi
+command -v sing-box >/dev/null || { echo "SINGBOX_MISSING"; exit 1; }
+sing-box version
 
 # 3. Generate a random AnyTLS password and a self-signed cert.
 echo "--- generating password and cert ---"
@@ -68,16 +74,17 @@ cat > /etc/sing-box/config.json <<EOF
   "route": {"rules": [], "final": "direct"}
 }
 EOF
-/usr/local/bin/sing-box check -c /etc/sing-box/config.json
+SB_BIN=$(command -v sing-box)
+/usr/local/bin/sing-box check -c /etc/sing-box/config.json 2>/dev/null || "$SB_BIN" check -c /etc/sing-box/config.json
 
 # 5. OpenRC service (Alpine) + start.
-cat > /etc/init.d/sing-box <<'SVC'
+cat > /etc/init.d/sing-box <<SVC
 #!/sbin/openrc-run
 name="sing-box"
-command="/usr/local/bin/sing-box"
+command="$SB_BIN"
 command_args="run -c /etc/sing-box/config.json"
 command_background=true
-pidfile="/run/${RC_SVCNAME}.pid"
+pidfile="/run/\${RC_SVCNAME}.pid"
 depend() {
   need net
   after firewall
